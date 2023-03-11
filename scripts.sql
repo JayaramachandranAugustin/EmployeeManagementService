@@ -1,3 +1,9 @@
+CREATE SEQUENCE employee_seq START 1;
+
+CREATE SEQUENCE team_seq START 1;
+
+CREATE SEQUENCE employee_assignment_seq START 1;
+
 create table employee(
 		id integer NOT NULL DEFAULT nextval('employee_seq'),
 		name varchar(50) NOT NULL,

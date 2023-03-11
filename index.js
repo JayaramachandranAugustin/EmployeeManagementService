@@ -1,13 +1,14 @@
 const express=require('express');
 const cors=require('cors')
 const app=express();
+const dotenv=require('dotenv');
 const swaggerJSDoc=require('swagger-jsdoc');
 const swaggerUI=require('swagger-ui-express');
-const {createEmployee,createTeam,createEmployeeAssignment}=require('./create')
-const {getAllEmployees,getAllTeams,getEmployee,getTeam}=require('./read')
-const {updateEmployee,updateTeam}=require('./update')
-const {deleteEmployee,deleteTeam,deleteEmployeeAssignment}=require('./delete')
-
+const {createEmployee,createTeam,createEmployeeAssignment}=require('./src/create')
+const {getAllEmployees,getAllTeams,getEmployee,getTeam}=require('./src/read')
+const {updateEmployee,updateTeam}=require('./src/update')
+const {deleteEmployee,deleteTeam,deleteEmployeeAssignment}=require('./src/delete')
+dotenv.config();
 const swaggerOptions={
     definition:{
         openapi:'3.0.0',
@@ -20,7 +21,7 @@ const swaggerOptions={
                 url:'https://whizpath.com',
                 email:'jayaramachandran@whizpath.com'
             },
-            servers:["http://localhost:3000"]
+            servers:[`http://localhost:${process.env.PORT}`]
         }
     },
     apis:["index.js"]
@@ -29,7 +30,6 @@ const swaggerDocs=swaggerJSDoc(swaggerOptions);
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerDocs));
 
 
-const {}=require('./update')
 var corsOptions={
     origin:'http://example.com',
     optionSuccessStatus:200
@@ -374,6 +374,6 @@ app.delete("/team/:id",deleteTeam)
 app.delete("/employeeassign/:employee_id/:team_id",deleteEmployeeAssignment)
 
 
-app.listen(3000,()=>{
-    console.log("server listening in port 3000");
+app.listen(process.env.PORT,()=>{
+    console.log(`server listening in port ${process.env.PORT}`);
 })
